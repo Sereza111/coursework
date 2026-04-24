@@ -1,0 +1,45 @@
+flowchart TD
+    accountant[Бухгалтер] -->|"Ввод начислений/удержаний"| payrollSystem[PayrollSystem]
+    hr[Кадровик] -->|"Ведение сотрудников"| payrollSystem
+    manager[Руководитель] -->|"Просмотр отчетов"| payrollSystem
+    admin[Администратор] -->|"Управление доступом"| payrollSystem
+    payrollSystem --> db[(salary_payroll_db)]
+
+---
+flowchart TD
+    startNode[Старт периода] --> collectData[Сбор кадровых данных]
+    collectData --> addAccruals[Ввод начислений]
+    addAccruals --> addDeductions[Ввод удержаний]
+    addDeductions --> calculateTax["Расчет НДФЛ (13%)"]
+    calculateTax --> calcNet[Расчет суммы к выплате]
+    calcNet --> generateSheet[Формирование ведомости]
+    generateSheet --> paymentRun[Проведение выплат]
+    paymentRun --> closePeriod[Закрытие периода]
+    closePeriod --> endNode[Завершение]
+
+---
+sequenceDiagram
+    participant Accountant as Бухгалтер
+    participant App as WinFormsClient
+    participant DB as MySQL
+    Accountant->>App: Ввод начислений и удержаний
+    App->>DB: INSERT accruals/deductions
+    DB-->>App: OK
+    Accountant->>App: Запрос расчета зарплаты
+    App->>DB: SELECT + расчет + запись payroll_calculations
+    DB-->>App: Сформированные суммы
+    Accountant->>App: Провести выплату
+    App->>DB: INSERT payments
+    DB-->>App: Подтверждение
+
+---
+erDiagram
+    departments ||--o{ employees : contains
+    positions ||--o{ employees : assigns
+    employees ||--o{ accruals : receives
+    employees ||--o{ deductions : has
+    payroll_periods ||--o{ accruals : forPeriod
+    payroll_periods ||--o{ deductions : forPeriod
+    employees ||--o{ payroll_calculations : calculated
+    payroll_periods ||--o{ payroll_calculations : includes
+    payroll_calculations ||--o{ payments : paidBy

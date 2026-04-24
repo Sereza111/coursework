@@ -1,0 +1,29 @@
+Как запустить прототип WinForms (начисление зарплаты)
+
+1) Установите MySQL Server 8.x и создайте базу, выполнив по очереди файлы:
+   sql\01_schema.sql
+   sql\02_seed.sql
+   sql\03_queries.sql
+   sql\04_security_and_backup.sql
+
+   (Можно через MySQL Workbench: File -> Open SQL Script -> Execute.)
+
+2) Проверьте, что сервер слушает localhost:3306, база salary_payroll_db есть,
+   пользователь payroll_admin с паролем из 04_security_and_backup.sql создан.
+
+3) Откройте консоль в папке:
+   coursework_payroll\winforms-prototype
+
+4) Запуск:
+   dotnet run -c Release
+
+   Либо запустите exe:
+   winforms-prototype\bin\Release\net8.0-windows\PayrollWinFormsPrototype.exe
+
+5) В окне нажмите «Сотрудники» или «Ведомость выплат» — данные подтянутся из MySQL.
+   Если база не поднята или неверный пароль — появится сообщение об ошибке.
+
+Документы Word и PowerPoint
+Файлы лежат в этой же папке coursework_payroll:
+  Курсовая_Бойченко_С_П.docx
+  Защита_Бойченко_С_П.pptx
