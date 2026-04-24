@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: payroll_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: salary_payroll_db
+      MYSQL_USER: payroll_admin
+      MYSQL_PASSWORD: "Admin#2026"
+    ports:
+      - "3306:3306"
+    volumes:
+      - payroll_db_data:/var/lib/mysql
+      - ./sql/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./sql/02_seed.sql:/docker-entrypoint-initdb.d/02_seed.sql
+      - ./sql/03_queries.sql:/docker-entrypoint-initdb.d/03_queries.sql
+      - ./sql/04_security_and_backup.sql:/docker-entrypoint-initdb.d/04_security_and_backup.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+volumes:
+  payroll_db_data:

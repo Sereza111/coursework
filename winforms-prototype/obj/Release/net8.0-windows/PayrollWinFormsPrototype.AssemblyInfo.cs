@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PayrollWinFormsPrototype")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da153de6589e1d642a23993bfc2f2855d35bc557")]
 [assembly: System.Reflection.AssemblyProductAttribute("PayrollWinFormsPrototype")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PayrollWinFormsPrototype")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
